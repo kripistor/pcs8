@@ -8,7 +8,7 @@ class ProductService {
       final response = await http.post(
         Uri.parse('http://172.19.0.1:8080/products/create'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-16',
+          'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode({
           'name': product.name,

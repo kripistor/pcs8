@@ -33,7 +33,7 @@ class EditProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Редактировать проду��т'),
+        title: Text('Редактировать продукт'),
       ),
       body: SingleChildScrollView(
         child: Padding(
