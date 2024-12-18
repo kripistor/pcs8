@@ -8,7 +8,7 @@ class ProductService {
       final response = await http.post(
         Uri.parse('http://172.19.0.1:8080/products/create'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json; charset=UTF-16',
         },
         body: jsonEncode({
           'name': product.name,
@@ -42,10 +42,30 @@ class ProductService {
     final response = await http.get(Uri.parse('http://172.19.0.1:8080/products'));
 
     if (response.statusCode == 200) {
-      List<dynamic> body = jsonDecode(response.body);
+      List<dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
       return body.map((dynamic item) => Product.fromJson(item)).toList();
     } else {
       throw Exception('Failed to load products');
+    }
+  }
+  Future<void> updateProduct(Product product) async {
+    try {
+      final response = await http.put(
+        Uri.parse('http://172.19.0.1:8080/products/update/${product.id}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(product.toJson()),
+      );
+
+      if (response.statusCode != 200) {
+        print('Failed to update product: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to update product');
+      }
+    } catch (e) {
+      print('Error updating product: $e');
+      throw Exception('Failed to update product');
     }
   }
 }

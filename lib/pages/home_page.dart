@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/product_model.dart';
 import '../services/product_service.dart';
 import 'add_product.dart';
+import 'edit_product.dart';
 import 'product_detail.dart';
 import '../models/cart_model.dart';
 
@@ -78,6 +79,21 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _navigateToEditProductPage(Product product) async {
+    final updatedProduct = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProductPage(product: product),
+      ),
+    );
+
+    if (updatedProduct != null) {
+      setState(() {
+        _futureProducts = ProductService().fetchProducts();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,6 +149,12 @@ class _HomePageState extends State<HomePage> {
                               setState(() {
                                 product.isFavorite = !product.isFavorite;
                               });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _navigateToEditProductPage(product);
                             },
                           ),
                           IconButton(
