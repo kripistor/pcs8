@@ -1,16 +1,9 @@
-# pcs8
+#  Практическая работа №8
+##  Лисичкин Виктор Евгеньевич ЭФБО-05-22
 
-A new Flutter project.
+# Работающий бэекнд на го
+![image](https://github.com/user-attachments/assets/fe198c1a-d95e-49f1-b881-327e55708d81)
 
-## Getting Started
+# Товары отображаются с бэкенда
+![image](https://github.com/user-attachments/assets/946c6465-2da3-4048-9f00-4c3d2ebd15a7)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
