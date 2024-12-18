@@ -22,49 +22,50 @@ class AddProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Добавить товар'),
+        title: Text('Добавить продукт'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              _buildTextFormField(_nameController, 'Название'),
-              _buildTextFormField(_descriptionController, 'Описание'),
-              _buildTextFormField(_imageController, 'URL изображения'),
-              _buildTextFormField(_priceController, 'Цена', keyboardType: TextInputType.number),
-              _buildTextFormField(_brandController, 'Бренд'),
-              _buildTextFormField(_processorController, 'Процессор'),
-              _buildTextFormField(_ramController, 'Оперативная память', keyboardType: TextInputType.number),
-              _buildTextFormField(_storageController, 'Хранилище'),
-              _buildTextFormField(_displayController, 'Дисплей'),
-              _buildTextFormField(_articleController, 'Артикул', keyboardType: TextInputType.number),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    final newProduct = Product(
-                      id: products.length + 1,
-                      name: _nameController.text,
-                      description: _descriptionController.text,
-                      image: _imageController.text,
-                      price: double.parse(_priceController.text),
-                      brand: _brandController.text,
-                      processor: _processorController.text,
-                      ram: _ramController.text,
-                      storage: _storageController.text,
-                      display: _displayController.text,
-                      article: int.parse(_articleController.text),
-                    );
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                _buildTextFormField(_nameController, 'Название'),
+                _buildTextFormField(_descriptionController, 'Описание'),
+                _buildTextFormField(_imageController, 'URL изображения'),
+                _buildTextFormField(_priceController, 'Цена', keyboardType: TextInputType.number),
+                _buildTextFormField(_brandController, 'Бренд'),
+                _buildTextFormField(_processorController, 'Процессор'),
+                _buildTextFormField(_ramController, 'ОЗУ'),
+                _buildTextFormField(_storageController, 'Хранилище'),
+                _buildTextFormField(_displayController, 'Дисплей'),
+                _buildTextFormField(_articleController, 'Артикул', keyboardType: TextInputType.number),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      final newProduct = Product(
+                        name: _nameController.text,
+                        description: _descriptionController.text,
+                        image: _imageController.text,
+                        price: double.parse(_priceController.text),
+                        brand: _brandController.text,
+                        processor: _processorController.text,
+                        ram: _ramController.text,
+                        storage: _storageController.text,
+                        display: _displayController.text,
+                        article: int.parse(_articleController.text),
+                      );
 
-                    await ProductService().addProduct(newProduct);
-                    Navigator.pop(context, newProduct);
-                  }
-                },
-                child: const Text('Добавить'),
-              ),
-            ],
+                      await ProductService().addProduct(newProduct);
+                      Navigator.pop(context, newProduct);
+                    }
+                  },
+                  child: const Text('Добавить', style: TextStyle(color: Colors.black)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -76,7 +77,9 @@ class AddProductPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
-        decoration: InputDecoration(labelText: label),
+        decoration: InputDecoration(
+          labelText: label,
+        ),
         keyboardType: keyboardType,
         validator: (value) {
           if (value == null || value.isEmpty) {

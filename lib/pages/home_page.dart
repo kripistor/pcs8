@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                           IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
-                              _deleteProduct(product.id);
+                              _deleteProduct(product.id!);
                             },
                           ),
                         ],

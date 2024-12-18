@@ -1,39 +1,51 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../models/product_model.dart';
 
 class ProductService {
-  static const String _baseUrl = 'http://172.19.0.1:8080/products';
-
-  Future<List<Product>> fetchProducts() async {
-    final response = await http.get(Uri.parse(_baseUrl));
-
-    if (response.statusCode == 200) {
-      List<dynamic> body = jsonDecode(response.body);
-      List<Product> products = body.map((dynamic item) => Product.fromJson(item)).toList();
-      return products;
-    } else {
-      throw Exception('Failed to load products');
-    }
-  }
-
   Future<void> addProduct(Product product) async {
-    final response = await http.post(
-      Uri.parse(_baseUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(product.toJson()),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('http://172.19.0.1:8080/products/create'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'name': product.name,
+          'description': product.description,
+          'image_url': product.image,
+          'price': product.price,
+          'brand': product.brand,
+          'processor': product.processor,
+          'ram': product.ram,
+          'storage': product.storage,
+          'display': product.display,
+          'article': product.article,
+          'is_favorite': product.isFavorite,
+        }),
+      );
 
-    if (response.statusCode != 201) {
+      if (response.statusCode != 201) {
+        print('Failed to add product: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to add product');
+      } else {
+        final responseData = jsonDecode(response.body);
+        product.id = responseData['id'];
+      }
+    } catch (e) {
+      print('Error adding product: $e');
       throw Exception('Failed to add product');
     }
   }
+  Future<List<Product>> fetchProducts() async {
+    final response = await http.get(Uri.parse('http://172.19.0.1:8080/products'));
 
-  Future<void> deleteProduct(int id) async {
-    final response = await http.delete(Uri.parse('$_baseUrl/$id'));
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to delete product');
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+      return body.map((dynamic item) => Product.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load products');
     }
   }
 }

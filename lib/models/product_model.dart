@@ -1,5 +1,5 @@
 class Product {
-  final int id;
+  int? id;
   final String name;
   final String description;
   final String image;
@@ -14,7 +14,7 @@ class Product {
   int quantity;
 
   Product({
-    required this.id,
+    this.id,
     required this.name,
     required this.description,
     required this.image,
@@ -49,7 +49,6 @@ class Product {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'description': description,
       'image_url': image,
