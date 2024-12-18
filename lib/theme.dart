@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 final ThemeData appTheme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
@@ -26,7 +25,12 @@ final ThemeData appTheme = ThemeData(
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.white, width: 2),
     ),
-    labelStyle: TextStyle(color: Colors.white),
+    labelStyle: TextStyle(color: Colors.black), // Label text color
+    hintStyle: TextStyle(color: Colors.black), // Hint text color
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black), // Border color when enabled
+    ),
+    floatingLabelStyle: TextStyle(color: Colors.black), // Label color when focused
   ),
   cardTheme: const CardTheme(
     margin: EdgeInsets.all(8),

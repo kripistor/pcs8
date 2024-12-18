@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   void _addToCart(Product product) {
     setState(() {
       final existingProduct = cart.firstWhere(
-        (cartProduct) => cartProduct.id == product.id,
+            (cartProduct) => cartProduct.id == product.id,
         orElse: () => Product(
           id: product.id,
           name: product.name,
@@ -49,8 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   void _deleteProduct(int id) async {
     try {
-      final response = await http
-          .delete(Uri.parse('http://172.19.0.1:8080/products/delete/$id'));
+      final response = await http.delete(Uri.parse('http://172.19.0.1:8080/products/delete/$id'));
       if (response.statusCode == 204) {
         setState(() {
           _futureProducts = ProductService().fetchProducts();
@@ -120,17 +119,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(product.name,
-                            style: Theme.of(context).textTheme.bodyLarge),
+                        child: Text(product.name, style: Theme.of(context).textTheme.bodyLarge),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           IconButton(
                             icon: Icon(
-                              product.isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
+                              product.isFavorite ? Icons.favorite : Icons.favorite_border,
                               color: product.isFavorite ? Colors.red : null,
                             ),
                             onPressed: () {
@@ -160,8 +156,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProductDetailPage(product: product),
+                                  builder: (context) => ProductDetailPage(product: product),
                                 ),
                               );
                             },
@@ -176,12 +171,9 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      floatingActionButton: Align(
-        alignment: Alignment.bottomLeft,
-        child: FloatingActionButton(
-          onPressed: _navigateToAddProductPage,
-          child: Icon(Icons.add),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToAddProductPage,
+        child: Icon(Icons.add),
       ),
     );
   }
